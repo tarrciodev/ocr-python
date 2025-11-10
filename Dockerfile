@@ -1,16 +1,12 @@
-FROM python:3.9-slim
+FROM python:3.9
 
 WORKDIR /app
 
-# Instalar dependências do sistema (incluindo libGL para OpenCV)
+# Usando base mais completa que já tem as libs gráficas
 RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     tesseract-ocr-por \
     poppler-utils \
-    libgl1 \
-    libglib2.0-0 \
-    libgl1-mesa-glx \
-    libglu1-mesa \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
