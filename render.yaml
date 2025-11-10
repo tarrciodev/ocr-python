@@ -3,4 +3,3 @@ services:
       name: ocr-api
       runtime: docker
       plan: free
-      region: ohio

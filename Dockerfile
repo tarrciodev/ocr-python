@@ -2,13 +2,10 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-# Instalar dependências do sistema (sem sudo)
+# Instalar dependências do sistema
 RUN apt-get update && apt-get install -y \
     tesseract-ocr \
-    tesseract-ocr-por \
     poppler-utils \
-    libgl1 \
-    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
