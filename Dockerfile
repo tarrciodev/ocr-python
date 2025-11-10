@@ -1,24 +1,26 @@
-FROM python:3.13-slim
+FROM python:3.9-slim
 
-# Instalar dependências do sistema
+WORKDIR /app
+
+# Instalar dependências do sistema (Tesseract OCR e outras)
 RUN apt-get update && apt-get install -y \
     tesseract-ocr \
+    tesseract-ocr-por \
+    poppler-utils \
     libgl1 \
     libglib2.0-0 \
-    build-essential \
-    poppler-utils \
     && rm -rf /var/lib/apt/lists/*
 
-# Criar diretório da aplicação
-WORKDIR /app
-COPY . /app
+COPY requirements.txt .
 
-# Instalar dependências Python
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+# Instalar dependências do Python
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Expor porta para Render
-EXPOSE 10000
+COPY . .
 
-# Rodar FastAPI
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "10000"]
+RUN useradd --create-home --shell /bin/bash appuser
+USER appuser
+
+EXPOSE 5000
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
