@@ -2,7 +2,7 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-# Instalar dependências do sistema
+# Instalar dependências do sistema (sem sudo)
 RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     tesseract-ocr-por \
